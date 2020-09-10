@@ -1,0 +1,19 @@
+# https://www.websequencediagrams.com/
+actor A
+participant browser
+participant server
+A->browser: enters text into form
+A->browser: hits submit button
+browser->server: form submit POST method
+note right of browser: POST body contains "note" text to append to array
+server-->>browser: 302 redirect response to source page
+note left of server: contains entry to add to notes array
+browser->browser: reloads page
+browser->server: requests main.css
+server-->>browser: sends main.css
+browser->server: requests main.js
+server-->>browser: sends main.js
+browser->server: requests data.json
+server-->>browser: sends data.json
+browser->A: user sees reload
+note over A, browser, server: finish
