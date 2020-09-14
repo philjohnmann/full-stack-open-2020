@@ -1,0 +1,23 @@
+title Fullstack Task 0.6
+
+# https://www.websequencediagrams.com/
+actor user
+participant browser
+participant server
+server-->browser: server has loaded \n all saved notes
+user->browser: enters text into form
+user->browser: hits submit button
+browser->server: form submit POST method
+note over server: 
+e.preventDefault() \n stops the 201 from \n refreshing the page 
+end note over server
+note over server:
+server stores the data
+end note over server
+browser->browser: 
+note over browser 
+notes.push(note) \n re-renders the page \n with the new note on it 
+end note over browser
+note over user, browser, server: 
+finish
+end note
