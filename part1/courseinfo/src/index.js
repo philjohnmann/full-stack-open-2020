@@ -1,65 +1,73 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = (props) => {
+const Header = (course) => {
   return (
     <div>
-      <h1>{props.course}</h1>
+      <h1>{course.course}</h1>
     </div>
   )
 }
 
-const Part = (props) => {
-  return(
+const Content = (course) => {
+  return( 
     <div>
-    <p>{props.part} {props.exercises}</p>
+      <p>{course.parts[0].name} {course.parts[0].exercises}</p>
+      <p>{course.parts[1].name} {course.parts[1].exercises}</p>
+      <p>{course.parts[2].name} {course.parts[2].exercises}</p>
     </div>
   )
 }
 
-const Total = (props) => {
+const Total = (parts) => {
   return (
   <div>
-    <p>Number of exercises {props.a + props.b + props.c}</p>
+    <p>Number of exercises {parts.parts[0].exercises + parts.parts[1].exercises + parts.parts[2].exercises}</p>
   </div>
   )
 }
 
-const App = () => {
-  const course = 'Half Stack application development'
-  const parts = [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
-
-
-  const Content = (props) => {
-    return( 
-      <div>
-        <Part part={parts[0].name} exercises={parts[0].exercises} />
-        <Part part={parts[1].name} exercises={parts[1].exercises} />
-        <Part part={parts[2].name} exercises={parts[2].exercises} />
-      </div>
-    )
+const App = (props) => {
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
   }
+  const {counter} = props
 
   return (
     <div>
-    <Header course={course} />
-    <Content />
-    <Total a={parts[0].exercises} b={parts[1].exercises} c={parts[2].exercises} />
+    <Header course={course.name} />
+    <Content parts={course.parts} />
+    <Total parts={course.parts} />
+    <div>{counter}</div>
   </div>
   )
+
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+let counter = 1
+
+const refresh = () => {
+  ReactDOM.render(
+    <App counter={counter} />, 
+    document.getElementById('root')
+  )
+  }
+
+  setInterval(() => {
+    refresh()
+    counter += 1
+  }, 1000)
