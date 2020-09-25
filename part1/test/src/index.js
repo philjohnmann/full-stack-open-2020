@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -17,7 +17,9 @@ const App1 = () => {
   const age = 10
   return (
     <div>
-      <h1>Greetings</h1>
+    <hr />
+      <h1>OLD:</h1>
+      <p><strong>Greetings</strong></p>
       <Hello name="Maya" age={26 + 10} />
       <Hello name={name} age={age} />
     </div>
@@ -27,19 +29,27 @@ const App1 = () => {
 
 
 const App = () => {
-  return(
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
+  return (
     <div>
+      <div>{counter}</div>
+      <App1 />
     </div>
+    
   )
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-    <App1 />
-  </React.StrictMode>,
+  <App />, 
   document.getElementById('root')
-);
+)
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
