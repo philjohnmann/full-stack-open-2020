@@ -36,7 +36,7 @@ const App = () => {
 
     const ShowStats = () => {
       let avg = (good-bad)/all
-      let pos = (good)/all
+      let pos = ((good)/all)*100
       if (isNaN(avg)) { avg = 0 }
       if (isNaN(pos)) { pos = 0 }
       return (
@@ -46,7 +46,7 @@ const App = () => {
       <li>bad {bad}</li>
       <li>all {all}</li>
       <li>average {avg}</li>
-      <li>positive {pos}</li>
+      <li>positive {pos}%</li>
       </ul>
     )
   }
