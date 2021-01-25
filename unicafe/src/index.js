@@ -2,25 +2,27 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 
-const Statistics = (props) => {
-  let good = props.good
-  let bad = props.bad
-  let neutral = props.neutral
-  let all = props.all
+const Statistics = ({ good, neutral, bad, all }) => {
   let avg = (good - bad) / all
   let pos = ((good) / all) * 100
   if (isNaN(avg)) { avg = 0 }
   if (isNaN(pos)) { pos = 0 }
-  return (
-    <ul>
-      <li>good {good}</li>
-      <li>neutral {neutral}</li>
-      <li>bad {bad}</li>
-      <li>all {all}</li>
-      <li>average {avg}</li>
-      <li>positive {pos}%</li>
-    </ul>
-  )
+  if (all === 0) {
+    return (
+      <p>No feedback given</p>
+    )
+  } else { 
+    return (
+      <ul>
+        <li>good {good}</li>
+        <li>neutral {neutral}</li>
+        <li>bad {bad}</li>
+        <li>all {all}</li>
+        <li>average {avg}</li>
+        <li>positive {pos}%</li>
+      </ul>
+    )
+}
 }
 
 const App = () => {
