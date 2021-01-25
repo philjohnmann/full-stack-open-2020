@@ -2,27 +2,49 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 
-const Statistics = ({ good, neutral, bad, all }) => {
+const Statistics = (props) => {
+  let good = props.good
+  let bad = props.bad
+  let neutral = props.neutral
+  let all = props.all
+  console.log(good, bad, neutral, all)
   let avg = (good - bad) / all
   let pos = ((good) / all) * 100
-  if (isNaN(avg)) { avg = 0 }
-  if (isNaN(pos)) { pos = 0 }
   if (all === 0) {
     return (
       <p>No feedback given</p>
     )
   } else { 
     return (
-      <ul>
-        <li>good {good}</li>
-        <li>neutral {neutral}</li>
-        <li>bad {bad}</li>
-        <li>all {all}</li>
-        <li>average {avg}</li>
-        <li>positive {pos}%</li>
-      </ul>
+      <table>
+      <tbody>
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+      <Statistic text="total" value={all} />
+      <Statistic text="average" value={avg} />
+      <Statistic text="positive" value={pos} add="%"/>
+        </tbody>
+        </table>
     )
 }
+}
+
+const Statistic = ({text, value, add}) => {
+  return (
+    <tr>
+    <td>{text}</td>
+    <td>{value} {add}</td>
+    </tr>
+  )
+}
+
+const Button = ({action, text}) => {
+  return (
+    <button onClick={action}>
+      {text}
+    </button>
+  )
 }
 
 const App = () => {
@@ -30,45 +52,37 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
+
 
   const zeroAll = () => {
     setGood(0)
     setNeutral(0)
     setBad(0)
-    setAll(0)
   }
 
-  const handleAll = () => {
-    setAll(all + 1)
-  }
 
   const handleGood = () => {
     setGood(good + 1)
-    handleAll()
   }
 
   const handleNeutral = () => {
     setNeutral(neutral + 1)
-    handleAll()
   }
 
   const handleBad = () => {
     setBad(bad + 1)
-    handleAll()
   }
   return (
     <div>
       <h1>give feedback</h1>
       <div>
-        <button onClick={handleGood}>good</button>
-        <button onClick={handleNeutral}>neutral</button>
-        <button onClick={handleBad}>bad</button>
-        <br />
-        <button onClick={zeroAll}>reset</button>
+        <Button action={handleGood} text="good" />
+        <Button action={handleNeutral} text="neutral" />
+        <Button action={handleBad} text="bad" />
+        <Button action={zeroAll} text="reset" />
       </div>
       <h2>statistics</h2>
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} />
+      <Statistics good={good} bad={bad} neutral={neutral} all={good+bad+neutral} />
     </div>
   )
 }
